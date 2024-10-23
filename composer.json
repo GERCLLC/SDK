@@ -1,0 +1,25 @@
+{
+  "name": "GERCLLC/SDK",
+  "description": "",
+  "homepage": "https://github.com/GERCLLC/SDK.git",
+  "type": "library",
+  "keywords": [
+  ],
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "GERCLLC\\SDK\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Anton Kalochelitis",
+      "email": "developing.w@gmail.com",
+      "homepage": "https://w-develop.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.1"
+  }
+}
