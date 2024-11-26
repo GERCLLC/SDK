@@ -1,9 +1,45 @@
 {
   "name": "gercllc/sdk",
-  "description": "",
+  "description": "PHP SDK для інтеграції з сервісами компанії GERC, яка надає комплексні рішення для управління та автоматизації комунальних послуг. Пакет дозволяє розробникам легко підключатися до API GERC і використовувати його функціонал для роботи з даними про платежі, квитанції та інші послуги.",
   "homepage": "https://github.com/GERCLLC/SDK.git",
   "type": "library",
   "keywords": [
+    "GERC",
+    "ГЕРЦ",
+    "платежи",
+    "платежі",
+    "коммунальные услуги",
+    "комунальні послуги",
+    "автоматизация платежей",
+    "автоматизація платежів",
+    "интеграция API",
+    "інтеграція API",
+    "управление услугами ЖКХ",
+    "управління послугами ЖКГ",
+    "API коммунальных платежей",
+    "API комунальних платежів",
+    "автоматизация расчетов",
+    "автоматизація розрахунків",
+    "SDK для ЖКХ",
+    "обработка квитанций",
+    "обробка квитанцій",
+    "коммунальные сервисы",
+    "комунальні сервіси",
+    "електронна оплата послуг",
+    "электронная оплата услуг",
+    "учет услуг ЖКХ",
+    "облік послуг ЖКГ",
+    "payments",
+    "utility services",
+    "automation of payments",
+    "API integration",
+    "utilities management",
+    "utility billing API",
+    "SDK for utilities",
+    "invoice processing",
+    "utility services platform",
+    "electronic payments",
+    "utility service tracking"
   ],
   "license": "MIT",
   "autoload": {
@@ -20,6 +56,12 @@
     }
   ],
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.1",
+    "guzzlehttp/guzzle": "^7.9",
+    "symfony/serializer": "^7.1",
+    "symfony/property-access": "^7.1"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.0"
   }
 }
