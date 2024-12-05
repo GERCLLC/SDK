@@ -16,6 +16,7 @@ class CommonGetID extends Sender
      */
     public function setRequestBody(ConstructCommonGetID $construct)
     {
+        $this->setUrl('/index.php?common=get_id');
         return parent::setRequestBodySender($construct);
     }
 }

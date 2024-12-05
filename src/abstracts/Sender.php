@@ -28,6 +28,9 @@ abstract class Sender
     /** @var Client $client */
     protected $client;
 
+    /** @var string $url */
+    protected $url;
+
     /** @var array $body */
     protected $body = [];
 
@@ -45,7 +48,7 @@ abstract class Sender
             throw new Exception(__FILE__ . ' line ' . __LINE__ . '. Must be not empty');
         }
 
-        if (!is_string(Config::getInstance()->getPartnerId())) {
+        if (!is_int(Config::getInstance()->getPartnerId())) {
             throw new Exception(__FILE__ . ' line ' . __LINE__ . '. Must be of the type string given');
         }
 
@@ -91,11 +94,10 @@ abstract class Sender
     }
 
     /**
-     * @param string $uri
      * @return string
      * @throws Exception
      */
-    public function send(string $uri): string
+    public function send(): string
     {
         // Проверяем наличие ключа 'data'
         if (!isset($this->body['data'])) {
@@ -103,7 +105,7 @@ abstract class Sender
         }
 
         try {
-            $response = $this->client->post($uri, [
+            $response = $this->client->post($this->url, [
                 'headers' => [
                     'Content-Type' => 'application/json',
                 ],
@@ -164,6 +166,25 @@ abstract class Sender
         $this->body['data'] = $dataArray;
 
         return $this;
+    }
+
+    /**
+     * @param string $url
+     * @return $this
+     */
+    public function setUrl(string $url): self
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl(): string
+    {
+        return $this->url;
     }
 
     public function getRequestBodyJson(): string

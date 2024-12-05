@@ -21,7 +21,7 @@ class Config
     protected $api_ver = 1;
 
     /**
-     * @return string
+     * @return int
      */
     public function getApiVer()
     {
@@ -40,18 +40,18 @@ class Config
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getPartnerId(): string
+    public function getPartnerId(): int
     {
         return $this->partner_id;
     }
 
     /**
-     * @param $partner_id
+     * @param int $partner_id
      * @return $this
      */
-    public function setPartnerId($partner_id)
+    public function setPartnerId(int $partner_id)
     {
         $this->partner_id = $partner_id;
 

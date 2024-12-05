@@ -7,11 +7,14 @@ use GERCLLC\SDK\constructList\Config;
 use GERCLLC\SDK\commandList\CommonGetID;
 use GERCLLC\SDK\constructList\commandList\CommonGetID\Body as ConstructCommonGetIDBody;
 
+// Реєстрація платежу (від 1 до N точок продажу)
+
 try {
+    $config = Config::getInstance();
     // Прописываем конфиг
-    Config::getInstance()->setBaseUri('https://fc-pay.gerc.ua');
-    Config::getInstance()->setPartnerId('4');
-    Config::getInstance()->setPartnerKey('12345');
+    $config->setBaseUri('https://fc-pay.gerc.ua');
+    $config->setPartnerId('4');
+    $config->setPartnerKey('12345');
 
     $payData = (new PayData())
         ->setPointId('42')
@@ -27,17 +30,17 @@ try {
         ->addPaydata($payData)
     ;
 
-    $response = (new CommonGetID());
-    $response->setRequestBody($constructGetIDBody);
-    $response->signature();
+    $request = (new CommonGetID());
+    $request->setRequestBody($constructGetIDBody);
+    $request->signature();
 
     echo "\n\n";
-    print_r($response->getRequestBodyJson());
+    print_r($request->getRequestBodyJson());
 
-    $result = $response->send('/index.php?common=get_id');
+    $response = $request->send();
 
     echo "\n\n";
-    print_r($result);
+    print_r($response);
     echo "\n\n";
 } catch (\Exception $e) {
     print_r($e->getMessage());

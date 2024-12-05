@@ -7,11 +7,14 @@ use GERCLLC\SDK\constructList\Config;
 use GERCLLC\SDK\commandList\CommonRefund;
 use GERCLLC\SDK\constructList\commandList\CommonRefund\Body as ConstructCommonRefund;
 
+// Запит повернення коштів
+
 try {
+    $config = Config::getInstance();
     // Прописываем конфиг
-    Config::getInstance()->setBaseUri('https://fc-pay.gerc.ua');
-    Config::getInstance()->setPartnerId('4');
-    Config::getInstance()->setPartnerKey('12345');
+    $config->setBaseUri('https://fc-pay.gerc.ua');
+    $config->setPartnerId('4');
+    $config->setPartnerKey('12345');
 
     $refundData = (new RefundData())
         ->setPointId('42')
@@ -23,17 +26,17 @@ try {
         ->setPartnerId('4')
         ->addRefundData($refundData);
 
-    $response = (new CommonRefund());
-    $response->setRequestBody($constructRefund);
-    $response->signature();
+    $request = (new CommonRefund());
+    $request->setRequestBody($constructRefund);
+    $request->signature();
 
     echo "\n\n";
-    print_r($response->getRequestBodyJson());
+    print_r($request->getRequestBodyJson());
 
-    $result = $response->send('/index.php?common=refund');
+    $response = $request->send();
 
     echo "\n\n";
-    print_r($result);
+    print_r($response);
     echo "\n\n";
 } catch (\Exception $e) {
     print_r($e->getMessage());

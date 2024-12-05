@@ -183,6 +183,10 @@ class PayData extends AbstractCommand
             return false;
         }
 
+        if (empty($this->getDescription())) {
+            return false;
+        }
+
         return true;
     }
 }

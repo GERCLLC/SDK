@@ -15,6 +15,7 @@ class CommonGetStatus extends Sender
      */
     public function setRequestBody(ConstructCommonGetStatus $construct)
     {
+        $this->setUrl('/index.php?common=get_status');
         return parent::setRequestBodySender($construct);
     }
 }

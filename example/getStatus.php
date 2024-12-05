@@ -6,28 +6,31 @@ use GERCLLC\SDK\constructList\Config;
 use GERCLLC\SDK\commandList\CommonGetStatus;
 use GERCLLC\SDK\constructList\commandList\CommonGetStatus\Body as ConstructCommonGetStatus;
 
+// Отримання статусу операції
+
 try {
+    $config = Config::getInstance();
     // Прописываем конфиг
-    Config::getInstance()->setBaseUri('https://fc-pay.gerc.ua');
-    Config::getInstance()->setPartnerId('4');
-    Config::getInstance()->setPartnerKey('12345');
+    $config->setBaseUri('https://fc-pay.gerc.ua');
+    $config->setPartnerId('4');
+    $config->setPartnerKey('12345');
 
     $constructGetStatus = (new ConstructCommonGetStatus())
-        ->setOperId('954015')
+        ->setOperId('963937')
         ->setPartnerId('4')
     ;
 
-    $response = (new CommonGetStatus());
-    $response->setRequestBody($constructGetStatus);
-    $response->signature();
+    $request = (new CommonGetStatus());
+    $request->setRequestBody($constructGetStatus);
+    $request->signature();
 
     echo "\n\n";
-    print_r($response->getRequestBodyJson());
+    print_r($request->getRequestBodyJson());
 
-    $result = $response->send('/index.php?common=get_status');
+    $response = $request->send();
 
     echo "\n\n";
-    print_r($result);
+    print_r($response);
     echo "\n\n";
 } catch (\Exception $e) {
     print_r($e->getMessage());
