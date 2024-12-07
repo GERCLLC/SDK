@@ -196,6 +196,9 @@ class CommonGetIDAndGetStatusTest extends TestCase
         $request->signature();
 
         $response = $request->send();
+        echo "\n\n";
+        print_r($response);
+        echo "\n\n";
         $responseArray = $this->serializer->decode($response, 'json');
 
         // Проверяем ключи верхнего уровня

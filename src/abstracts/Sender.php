@@ -2,7 +2,6 @@
 
 namespace GERCLLC\SDK\abstracts;
 
-use GERCLLC\SDK\constructList\commandList\CommonGetID\Body as ConstructCommonGetIDBody;
 use GERCLLC\SDK\constructList\Config;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
@@ -99,11 +98,6 @@ abstract class Sender
      */
     public function send(): string
     {
-        // Проверяем наличие ключа 'data'
-        if (!isset($this->body['data'])) {
-            throw new Exception(__FILE__ . ' line ' . __LINE__ . ". The key 'data' was not found in the array");
-        }
-
         try {
             $response = $this->client->post($this->url, [
                 'headers' => [

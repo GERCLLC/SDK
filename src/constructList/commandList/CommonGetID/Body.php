@@ -129,9 +129,9 @@ class Body extends AbstractCommand
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getUserIp(): string
+    public function getUserIp(): ?string
     {
         return $this->user_ip;
     }

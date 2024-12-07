@@ -4,7 +4,6 @@ namespace GERCLLC\SDK\commandList;
 
 use Exception;
 use GERCLLC\SDK\abstracts\Sender;
-
 use GERCLLC\SDK\constructList\commandList\CommonGetID\Body as ConstructCommonGetID;
 
 class CommonGetID extends Sender
