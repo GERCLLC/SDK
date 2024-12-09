@@ -1,6 +1,6 @@
 <?php
 
-namespace GERCLLC\SDK\constructList\commandList\CommonCancelHold;
+namespace GERCLLC\SDK\constructList\commandList\CommonConfirmHold;
 
 use GERCLLC\SDK\abstracts\AbstractCommand;
 use GERCLLC\SDK\constructList\Config;
@@ -20,6 +20,13 @@ class Body extends AbstractCommand
      * @var int $oper_id
      */
     protected $oper_id;
+
+    /**
+     * Масив даних на підтвердження
+     *
+     * @var array $payment_data
+     */
+    protected $payment_data;
 
     /** @var array $dataArray */
     protected $dataArray = [];
@@ -65,6 +72,25 @@ class Body extends AbstractCommand
     /**
      * @return array
      */
+    public function getPaymentData(): array
+    {
+        return $this->payment_data;
+    }
+
+    /**
+     * @param PaymentData $payment_data
+     * @return $this
+     */
+    public function addPaymentData(PaymentData $payment_data): self
+    {
+        $this->payment_data[] = $payment_data->getArray();;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
     public function getArray(): array
     {
         if (!empty($this->getPartnerId())) {
@@ -73,6 +99,10 @@ class Body extends AbstractCommand
 
         if (!empty($this->getOperId())) {
             $this->dataArray['oper_id'] = $this->getOperId();
+        }
+
+        if (!empty($this->getPaymentData())) {
+            $this->dataArray['payment_data'] = $this->getPaymentData();
         }
 
         $this->dataArray['api_ver'] = Config::getInstance()->getApiVer();
@@ -90,6 +120,10 @@ class Body extends AbstractCommand
         }
 
         if (empty($this->getOperId())) {
+            return false;
+        }
+
+        if (empty($this->getPaymentData())) {
             return false;
         }
 
