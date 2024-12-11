@@ -21,5 +21,10 @@ try {
     // Зберігаєм у файл
     file_put_contents('receipt-' . time() . '.pdf', $response);
 } catch (\Exception $e) {
+    echo "\n\n";
+    print_r($e->getFile());
+    echo "\n";
+    print_r($e->getLine());
+    echo "\n";
     print_r($e->getMessage());
 }

@@ -34,7 +34,7 @@ try {
         ->setPointId('42')
         ->setAmount('100')
         ->setDescription('testdescr1')
-        ->setExtraParams(" ewog12222zEyMyIKfQ==")
+        ->setExtraParams("ewog12222zEyMyIKfQ==")
         ->setPayer("Петров П.П.")
     ;
 
@@ -58,5 +58,10 @@ try {
     print_r($response);
     echo "\n\n";
 } catch (\Exception $e) {
+    echo "\n\n";
+    print_r($e->getFile());
+    echo "\n";
+    print_r($e->getLine());
+    echo "\n";
     print_r($e->getMessage());
 }

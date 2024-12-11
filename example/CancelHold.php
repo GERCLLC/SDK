@@ -33,5 +33,10 @@ try {
     print_r($response);
     echo "\n\n";
 } catch (\Exception $e) {
+    echo "\n\n";
+    print_r($e->getFile());
+    echo "\n";
+    print_r($e->getLine());
+    echo "\n";
     print_r($e->getMessage());
 }

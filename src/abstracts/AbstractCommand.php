@@ -23,6 +23,22 @@ abstract class AbstractCommand
     abstract public function getArray(): array;
 
     /**
+     * @return Serializer
+     */
+    public function getSerializer(): Serializer
+    {
+        return $this->serializer;
+    }
+
+    /**
+     * @param Serializer $serializer
+     */
+    public function setSerializer(Serializer $serializer): void
+    {
+        $this->serializer = $serializer;
+    }
+
+    /**
      * @return string
      * @throws Exception
      */
