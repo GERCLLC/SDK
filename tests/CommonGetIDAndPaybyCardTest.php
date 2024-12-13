@@ -66,7 +66,7 @@ class CommonGetIDAndPaybyCardTest extends TestCase
         // Создание тела запроса
         $constructGetIDBody = (new ConstructCommonGetIDBody())
             ->setPartnerId('4')
-            ->setUserIp('188.163.31.71')
+            ->setUserIp('188.163.31.52')
             ->addPaydata($payData);
 
         $request = (new CommonGetID());
@@ -76,7 +76,8 @@ class CommonGetIDAndPaybyCardTest extends TestCase
         echo "\n\n";
         print_r($request->getRequestBodyJson());
 
-        $response = $request->send();
+        $request->send();
+        $response = $request->getResponseStringJson();
 
         echo "\n\n";
         print_r($response);
@@ -165,13 +166,13 @@ class CommonGetIDAndPaybyCardTest extends TestCase
         echo "\n\n";
         print_r($request->getRequestBodyJson());
 
-        $response = $request->send();
+        $request->send();
+        $response = $request->getResponseStringJson();
         echo "\n\n";
         print_r($response);
         echo "\n\n";
 
         // Декодирование JSON-ответа
         $responseArray = json_decode($response, true);
-
     }
 }

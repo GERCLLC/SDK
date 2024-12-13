@@ -5,6 +5,7 @@ namespace GERCLLC\SDK\commandList;
 use Exception;
 use GERCLLC\SDK\abstracts\Sender;
 use GERCLLC\SDK\constructList\commandList\CfPay\Body as ConstructCfPayBody;
+use GERCLLC\SDK\response\command\CfPay as ResponseCommandCfPay;
 
 class CfPay extends Sender
 {
@@ -18,5 +19,14 @@ class CfPay extends Sender
         $this->setUrl('/index.php?cf=pay');
 
         return parent::setRequestBodySender($construct);
+    }
+
+    /**
+     * @param array $data
+     * @return ResponseCommandCfPay
+     */
+    protected function getResponseObjectName(array $data): ResponseCommandCfPay
+    {
+        return new ResponseCommandCfPay($data);
     }
 }

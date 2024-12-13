@@ -53,7 +53,8 @@ class CommonGetFreeTest extends TestCase
             ->setRequestBody($constructGetFeeBody)
             ->signature();
 
-        $response = $request->send();
+        $request->send();
+        $response = $request->getResponseStringJson();
 
         // Декодируем JSON-ответ
         $responseData = json_decode($response, true);

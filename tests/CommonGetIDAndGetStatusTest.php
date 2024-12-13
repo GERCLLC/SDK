@@ -90,7 +90,8 @@ class CommonGetIDAndGetStatusTest extends TestCase
         $this->assertJson($jsonBody);
 
         // Отправки запроса
-        $response = $request->send();
+        $request->send();
+        $response = $request->getResponseStringJson();
         $this->assertNotEmpty($response);
         $this->assertJson($response);
 
@@ -165,7 +166,8 @@ class CommonGetIDAndGetStatusTest extends TestCase
         $this->assertJson($jsonBody);
 
         // Отправки запроса
-        $response = $request->send();
+        $request->send();
+        $response = $request->getResponseStringJson();
         $this->assertNotEmpty($response);
         $this->assertJson($response);
 
@@ -195,7 +197,8 @@ class CommonGetIDAndGetStatusTest extends TestCase
         $request->setRequestBody($constructGetStatus);
         $request->signature();
 
-        $response = $request->send();
+        $request->send();
+        $response = $request->getResponseStringJson();
         echo "\n\n";
         print_r($response);
         echo "\n\n";

@@ -5,6 +5,8 @@ require_once '../vendor/autoload.php';
 use GERCLLC\SDK\constructList\Config;
 use GERCLLC\SDK\commandList\CfPay;
 use GERCLLC\SDK\constructList\commandList\CfPay\Body as ConstructCfPayBody;
+use GERCLLC\SDK\response\command\CfPay as ResponseCommandCfPay;
+use GERCLLC\SDK\response\Error;
 
 // Оплата карткою
 
@@ -19,7 +21,7 @@ try {
 
     $constructCfPayBody = (new ConstructCfPayBody())
         ->setPartnerId(4)
-        ->setOperId(967766)
+        ->setOperId(987714)
         ->setColorDepth(24)
         ->setScreenHeight(1080)
         ->setScreenWidth(1920)
@@ -38,12 +40,22 @@ try {
 
     echo "\n\n";
     print_r($request->getRequestBodyJson());
-
-    $response = $request->send();
+    $request->send();
+    $response = $request->getResponseStringJson();
 
     echo "\n\n";
     print_r($response);
     echo "\n\n";
+    $object = $request->getResponseObject();
+    if (!empty($object instanceof Error)) {
+        print_r($object->getError());
+        exit();
+    }
+
+    /** @var ResponseCommandCfPay $data */
+    $data = $object->getData();
+    print_r($data);
+
 } catch (Exception $e) {
     echo "\n\n";
     print_r($e->getFile());

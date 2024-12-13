@@ -26,8 +26,8 @@ try {
 
     echo "\n\n";
     print_r($request->getRequestBodyJson());
-
-    $response = $request->send();
+    $request->send();
+    $response = $request->getResponseStringJson();
 
     echo "\n\n";
     print_r($response);

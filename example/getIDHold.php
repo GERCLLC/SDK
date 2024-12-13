@@ -35,24 +35,22 @@ try {
         ->setAmount('100')
         ->setDescription('testdescr1')
         ->setExtraParams("ewog12222zEyMyIKfQ==")
-        ->setPayer("Петров П.П.")
-    ;
+        ->setPayer("Петров П.П.");
 
     $constructGetIDBody = (new ConstructCommonGetIDBody())
         ->setPartnerId('4')
         ->setOperType(ConstructCommonGetIDBody::OPER_TYPE_HOLD)
         ->addPaydata($payData)
-        ->addPaydata($payData)
-    ;
+        ->addPaydata($payData);
 
     $request = (new CommonGetID());
     $request->setRequestBody($constructGetIDBody);
     $request->signature();
-    
+
     echo "\n\n";
     print_r($request->getRequestBodyJson());
-
-    $response = $request->send();
+    $request->send();
+    $response = $request->getResponseStringJson();
 
     echo "\n\n";
     print_r($response);

@@ -17,7 +17,7 @@ try {
 
     $constructCommonCancelHoldBody = (new ConstructCommonCancelHoldBody())
         ->setPartnerId('4')
-        ->setOperId(969188)
+        ->setOperId(987698)
     ;
 
     $request = (new CommonCancelHold());
@@ -26,8 +26,8 @@ try {
 
     echo "\n\n";
     print_r($request->getRequestBodyJson());
-
-    $response = $request->send();
+    $request->send();
+    $response = $request->getResponseStringJson();
 
     echo "\n\n";
     print_r($response);

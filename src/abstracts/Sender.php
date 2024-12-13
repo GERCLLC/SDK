@@ -3,6 +3,9 @@
 namespace GERCLLC\SDK\abstracts;
 
 use GERCLLC\SDK\constructList\Config;
+use GERCLLC\SDK\helper\JSON;
+use GERCLLC\SDK\response\Data;
+use GERCLLC\SDK\response\Error;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -15,6 +18,9 @@ use GuzzleHttp\Exception\ServerException;
 
 abstract class Sender
 {
+    /** @var bool $checkJson */
+    protected $checkJson = true;
+
     /** @var string $partner_id */
     protected $partner_id = '';
 
@@ -29,6 +35,9 @@ abstract class Sender
 
     /** @var string $url */
     protected $url;
+
+    /** @var string $responseJson */
+    protected $responseStringJson;
 
     /** @var array $body */
     protected $body = [];
@@ -55,11 +64,27 @@ abstract class Sender
             throw new Exception(__FILE__ . ' line ' . __LINE__ . '. Must be of the type string given');
         }
 
+        // Перевіряємо чи є абстрактний метод
+        if (!method_exists($this, 'getResponseObjectName')) {
+            throw new Exception('Method is missing getResponseObjectName ');
+        }
+
         $this->partner_id = Config::getInstance()->getPartnerId();
         $this->partner_key = Config::getInstance()->getPartnerKey();
 
         // Инициализация сериализатора
         $this->serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
+    }
+
+    /**
+     * @param $checkJson
+     * @return $this
+     */
+    protected function setCheckJson($checkJson = true): self
+    {
+        $this->checkJson = $checkJson;
+
+        return $this;
     }
 
     /**
@@ -93,10 +118,10 @@ abstract class Sender
     }
 
     /**
-     * @return string
+     * @return void
      * @throws Exception
      */
-    public function send(): string
+    public function send(): void
     {
         try {
             $response = $this->client->post($this->url, [
@@ -140,8 +165,22 @@ abstract class Sender
             );
         }
 
-        // Получение ответа
-        return $response->getBody()->getContents();
+        if (true === $this->checkJson) {
+            try {
+                // Получение ответа
+                $jsonString = $response->getBody()->getContents();
+
+                if (JSON::isValidStringJson($jsonString)) {
+                    $this->responseStringJson = $jsonString;
+                } else {
+                    throw new Exception('JSON is invalid');
+                }
+            } catch (Exception $e) {
+                throw new Exception(
+                    sprintf("JSON is invalid: %s", $e->getMessage())
+                );
+            }
+        }
     }
 
     /**
@@ -187,4 +226,50 @@ abstract class Sender
             'json_encode_options' => JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
         ]);
     }
+
+    /**
+     * @return string
+     * @throws Exception
+     */
+    public function getResponseStringJson()
+    {
+        if (true === $this->checkJson) {
+            if (empty($this->responseStringJson)) {
+                throw new Exception('Response is Empty');
+            }
+        }
+
+        return $this->responseStringJson;
+    }
+
+    /**
+     * @return Data|Error
+     * @throws Exception
+     */
+    public function getResponseObject()
+    {
+        if (empty($this->responseStringJson)) {
+            throw new Exception('Response is Empty');
+        }
+
+        if (JSON::isValidStringJson($this->responseStringJson)) {
+            $array = $this->serializer->decode($this->responseStringJson, 'json');
+
+            if (array_key_exists('data', $array)) {
+                $object = new Data($this->getResponseObjectName($array));
+            } elseif (array_key_exists('error', $array)) {
+                $object = new Error($array);
+            } else {
+                throw new Exception('Array is invalid');
+            }
+        } else {
+            throw new Exception('JSON is invalid');
+        }
+
+        return $object;
+    }
+
+    /**
+     * abstract protected function getResponseObjectName();
+     */
 }

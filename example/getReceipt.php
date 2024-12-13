@@ -15,9 +15,10 @@ try {
     $config->setPartnerKey('12345');
 
     $request = (new CommonGetReceipt());
-    $request->setRequestBody(4, 971147);
+    $request->setRequestBody(4, 987717);
 
-    $response = $request->send();
+    $request->send();
+    $response = $request->getResponseStringJson();
     // Зберігаєм у файл
     file_put_contents('receipt-' . time() . '.pdf', $response);
 } catch (\Exception $e) {

@@ -5,6 +5,7 @@ namespace GERCLLC\SDK\commandList;
 use Exception;
 use GERCLLC\SDK\abstracts\Sender;
 use GERCLLC\SDK\constructList\commandList\CommonGetStatus\Body as ConstructCommonGetStatus;
+use GERCLLC\SDK\response\command\GetStatus as ResponseCommandGetStatus;
 
 class CommonGetStatus extends Sender
 {
@@ -17,5 +18,14 @@ class CommonGetStatus extends Sender
     {
         $this->setUrl('/index.php?common=get_status');
         return parent::setRequestBodySender($construct);
+    }
+
+    /**
+     * @param array $data
+     * @return ResponseCommandGetStatus
+     */
+    protected function getResponseObjectName(array $data): ResponseCommandGetStatus
+    {
+        return new ResponseCommandGetStatus($data);
     }
 }
