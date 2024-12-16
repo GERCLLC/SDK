@@ -165,21 +165,21 @@ abstract class Sender
             );
         }
 
-        if (true === $this->checkJson) {
-            try {
-                // Получение ответа
-                $jsonString = $response->getBody()->getContents();
+        try {
+            // Получение ответа
+            $jsonString = $response->getBody()->getContents();
 
-                if (JSON::isValidStringJson($jsonString)) {
-                    $this->responseStringJson = $jsonString;
-                } else {
+            if (true === $this->checkJson) {
+                if (!JSON::isValidStringJson($jsonString)) {
                     throw new Exception('JSON is invalid');
                 }
-            } catch (Exception $e) {
-                throw new Exception(
-                    sprintf("JSON is invalid: %s", $e->getMessage())
-                );
             }
+
+            $this->responseStringJson = $jsonString;
+        } catch (Exception $e) {
+            throw new Exception(
+                sprintf("Answer is invalid: %s", $e->getMessage())
+            );
         }
     }
 

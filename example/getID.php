@@ -26,7 +26,7 @@ try {
 
     $constructGetIDBody = (new ConstructCommonGetIDBody())
         ->setPartnerId('4')
-        ->setUserIp('188.163.31.52')
+        ->setUserIp('xxx.xxx.xx.xx') // Обовязково тільки для оплати PaybyCard
         ->addPaydata($payData);
 
     $request = (new CommonGetID());
@@ -41,6 +41,14 @@ try {
     print_r($response);
     echo "\n\n";
     $object = $request->getResponseObject();
+
+    // Перевіряємо чи є помилка
+    if ($object instanceof \GERCLLC\SDK\response\Error) {
+        print_r($object->getError());
+        echo "\n\n";
+        exit();
+    }
+
     /** @var ResponseCommandGetID $data */
     $data = $object->getData();
 

@@ -5,6 +5,7 @@ namespace GERCLLC\SDK\constructList\commandList\CommonStartCardValidate;
 use Exception;
 use GERCLLC\SDK\abstracts\AbstractCommand;
 use GERCLLC\SDK\constructList\Config;
+use GERCLLC\SDK\helper\IP;
 
 class Body extends AbstractCommand
 {
@@ -169,28 +170,12 @@ class Body extends AbstractCommand
      */
     public function setUserIp(string $user_ip): self
     {
-        if (!$this->validateIpAddress($user_ip)) {
+        if (!IP::validateIpAddress($user_ip)) {
             throw new Exception('IP address ' . $user_ip . ' is not valid');
         }
         $this->user_ip = $user_ip;
 
         return $this;
-    }
-
-    /**
-     * @param string $ipAddress
-     * @return bool
-     */
-    protected function validateIpAddress(string $ipAddress): bool
-    {
-        // Проверка на IPv4 или IPv6
-        if (filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-            return true;
-        } elseif (filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            return true;
-        }
-
-        return false;
     }
 
     /**

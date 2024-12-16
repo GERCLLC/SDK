@@ -23,10 +23,14 @@ class GetID extends ResponseCommand
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getFee()
     {
+        if (empty($this->response['data']['fee'])) {
+            return null;
+        }
+
         return (int)$this->response['data']['fee'];
     }
 }

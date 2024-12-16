@@ -5,6 +5,7 @@ namespace GERCLLC\SDK\constructList\commandList\CommonGetID;
 use Exception;
 use GERCLLC\SDK\abstracts\AbstractCommand;
 use GERCLLC\SDK\constructList\Config;
+use GERCLLC\SDK\helper\IP;
 
 class Body extends AbstractCommand
 {
@@ -14,6 +15,13 @@ class Body extends AbstractCommand
      * @var int $partner_id
      */
     protected $partner_id;
+
+    /**
+     * Ідентифікатор замовлення партнера
+     *
+     * @var string $order_id
+     */
+    protected $order_id;
 
     /**
      * URL редиректа користувача після проведення платежу
@@ -72,9 +80,9 @@ class Body extends AbstractCommand
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getPartnerId(): int
+    public function getPartnerId(): ?int
     {
         return $this->partner_id;
     }
@@ -91,9 +99,9 @@ class Body extends AbstractCommand
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getBackrefUrl(): string
+    public function getBackrefUrl(): ?string
     {
         return $this->backref_url;
     }
@@ -110,9 +118,28 @@ class Body extends AbstractCommand
     }
 
     /**
-     * @return string
+     * @return int|null
      */
-    public function getNotifyUrl(): string
+    public function getOrderId(): ?int
+    {
+        return $this->order_id;
+    }
+
+    /**
+     * @param string $order_id
+     * @return $this
+     */
+    public function setOrderId(string $order_id): self
+    {
+        $this->order_id = $order_id;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getNotifyUrl(): ?string
     {
         return $this->notify_url;
     }
@@ -143,7 +170,7 @@ class Body extends AbstractCommand
      */
     public function setUserIp(string $user_ip): self
     {
-        if (!$this->validateIpAddress($user_ip)) {
+        if (!IP::validateIpAddress($user_ip)) {
             throw new Exception('IP address ' . $user_ip . ' is not valid');
         }
         $this->user_ip = $user_ip;
@@ -152,25 +179,9 @@ class Body extends AbstractCommand
     }
 
     /**
-     * @param string $ipAddress
-     * @return bool
+     * @return int|null
      */
-    protected function validateIpAddress(string $ipAddress): bool
-    {
-        // Проверка на IPv4 или IPv6
-        if (filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-            return true;
-        } elseif (filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @return int
-     */
-    public function getOperType(): int
+    public function getOperType(): ?int
     {
         return $this->oper_type;
     }
@@ -212,6 +223,10 @@ class Body extends AbstractCommand
     {
         if (!empty($this->getPartnerId())) {
             $this->dataArray['partner_id'] = $this->getPartnerId();
+        }
+
+        if (!empty($this->getOrderId())) {
+            $this->dataArray['order_id'] = $this->getOrderId();
         }
 
         if (!empty($this->getOperType())) {

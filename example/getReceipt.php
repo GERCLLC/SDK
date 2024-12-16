@@ -16,8 +16,10 @@ try {
 
     $request = (new CommonGetReceipt());
     $request->setRequestBody(4, 987717);
+    print_r($request->getUrl());
 
     $request->send();
+
     $response = $request->getResponseStringJson();
     // Зберігаєм у файл
     file_put_contents('receipt-' . time() . '.pdf', $response);

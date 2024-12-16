@@ -46,6 +46,7 @@ try {
     echo "\n\n";
     print_r($response);
     echo "\n\n";
+
     $object = $request->getResponseObject();
     if (!empty($object instanceof Error)) {
         print_r($object->getError());
@@ -55,7 +56,11 @@ try {
     /** @var ResponseCommandCfPay $data */
     $data = $object->getData();
     print_r($data);
-
+    echo "\n\n";
+    print_r($data->getStatus());
+    echo "\n";
+    print_r($data->getLink());
+    echo "\n";
 } catch (Exception $e) {
     echo "\n\n";
     print_r($e->getFile());
