@@ -32,6 +32,16 @@ try {
     echo "\n\n";
     print_r($response);
     echo "\n\n";
+    $object = $request->getResponseObject();
+
+    // Перевіряємо чи є помилка
+    if ($object instanceof \GERCLLC\SDK\response\Error) {
+        print_r($object->getError());
+        echo "\n\n";
+        exit();
+    }
+
+
 } catch (Exception $e) {
     echo "\n\n";
     print_r($e->getFile());

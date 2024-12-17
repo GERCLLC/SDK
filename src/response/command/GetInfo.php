@@ -6,5 +6,8 @@ use GERCLLC\SDK\abstracts\ResponseCommand;
 
 class GetInfo extends ResponseCommand
 {
-    // TODO: Реализовать после получения пазитивного ответа
+    public function getDataList()
+    {
+        return $this->response['data'];
+    }
 }

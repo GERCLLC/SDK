@@ -6,6 +6,7 @@ use GERCLLC\SDK\constructList\Config;
 use GERCLLC\SDK\commandList\CommonGetInfo;
 use GERCLLC\SDK\constructList\commandList\CommonGetInfo\PayData;
 use GERCLLC\SDK\constructList\commandList\CommonGetInfo\Body as ConstructCommonGetInfoBody;
+use GERCLLC\SDK\response\command\GetInfo as ResponseCommandGetInfo;
 
 // Запит довідкової інформації
 // TODO: Відповідь {"error":"Доступ заборонено"}, потрібно розібратись
@@ -36,8 +37,20 @@ try {
     print_r($response);
     echo "\n\n";
     $object = $request->getResponseObject();
+
+    // Перевіряємо чи є помилка
+    if ($object instanceof \GERCLLC\SDK\response\Error) {
+        print_r($object->getError());
+        echo "\n\n";
+        exit();
+    }
+
+    echo "\n\n";
+    /** @var ResponseCommandGetInfo $data */
+    $data = $object->getData();
     echo "\n";
-    print_r($object->getError());
+
+    print_r($data->getDataList());
 } catch (\Exception $e) {
     echo "\n\n";
     print_r($e->getFile());
